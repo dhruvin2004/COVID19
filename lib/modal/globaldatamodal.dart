@@ -1,151 +1,173 @@
 // To parse this JSON data, do
 //
-//     final globalData = globalDataFromJson(jsonString);
+//     final allCountry = allCountryFromJson(jsonString);
 
 import 'dart:convert';
 
-GlobalData globalDataFromJson(String str) => GlobalData.fromJson(json.decode(str));
+List<AllCountry> allCountryFromJson(String str) => List<AllCountry>.from(json.decode(str).map((x) => AllCountry.fromJson(x)));
 
-String globalDataToJson(GlobalData data) => json.encode(data.toJson());
+String allCountryToJson(List<AllCountry> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class GlobalData {
-  GlobalData({
-    this.id,
-    this.message,
-    this.global,
-    this.countries,
-    this.date,
-  });
-
-  String? id;
-  String? message;
-  Global? global;
-  List<Country>? countries;
-  DateTime? date;
-
-  factory GlobalData.fromJson(Map<String, dynamic> json) => GlobalData(
-    id: json["ID"],
-    message: json["Message"],
-    global: json["Global"] == null ? null : Global.fromJson(json["Global"]),
-    countries: json["Countries"] == null ? [] : List<Country>.from(json["Countries"]!.map((x) => Country.fromJson(x))),
-    date: json["Date"] == null ? null : DateTime.parse(json["Date"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "ID": id,
-    "Message": message,
-    "Global": global?.toJson(),
-    "Countries": countries == null ? [] : List<dynamic>.from(countries!.map((x) => x.toJson())),
-    "Date": date?.toIso8601String(),
-  };
-}
-
-class Country {
-  Country({
-    this.id,
+class AllCountry {
+  AllCountry({
+    this.updated,
     this.country,
-    this.countryCode,
-    this.slug,
-    this.newConfirmed,
-    this.totalConfirmed,
-    this.newDeaths,
-    this.totalDeaths,
-    this.newRecovered,
-    this.totalRecovered,
-    this.date,
-    this.premium,
+    this.countryInfo,
+    this.cases,
+    this.todayCases,
+    this.deaths,
+    this.todayDeaths,
+    this.recovered,
+    this.todayRecovered,
+    this.active,
+    this.critical,
+    this.casesPerOneMillion,
+    this.deathsPerOneMillion,
+    this.tests,
+    this.testsPerOneMillion,
+    this.population,
+    this.continent,
+    this.oneCasePerPeople,
+    this.oneDeathPerPeople,
+    this.oneTestPerPeople,
+    this.activePerOneMillion,
+    this.recoveredPerOneMillion,
+    this.criticalPerOneMillion,
   });
 
-  String? id;
+  int? updated;
   String? country;
-  String? countryCode;
-  String? slug;
-  int? newConfirmed;
-  int? totalConfirmed;
-  int? newDeaths;
-  int? totalDeaths;
-  int? newRecovered;
-  int? totalRecovered;
-  DateTime? date;
-  Premium? premium;
+  CountryInfo? countryInfo;
+  int? cases;
+  int? todayCases;
+  int? deaths;
+  int? todayDeaths;
+  int? recovered;
+  int? todayRecovered;
+  int? active;
+  int? critical;
+  int? casesPerOneMillion;
+  int? deathsPerOneMillion;
+  int? tests;
+  int? testsPerOneMillion;
+  int? population;
+  Continent? continent;
+  int? oneCasePerPeople;
+  int? oneDeathPerPeople;
+  int? oneTestPerPeople;
+  double? activePerOneMillion;
+  double? recoveredPerOneMillion;
+  double? criticalPerOneMillion;
 
-  factory Country.fromJson(Map<String, dynamic> json) => Country(
-    id: json["ID"],
-    country: json["Country"],
-    countryCode: json["CountryCode"],
-    slug: json["Slug"],
-    newConfirmed: json["NewConfirmed"],
-    totalConfirmed: json["TotalConfirmed"],
-    newDeaths: json["NewDeaths"],
-    totalDeaths: json["TotalDeaths"],
-    newRecovered: json["NewRecovered"],
-    totalRecovered: json["TotalRecovered"],
-    date: json["Date"] == null ? null : DateTime.parse(json["Date"]),
-    premium: json["Premium"] == null ? null : Premium.fromJson(json["Premium"]),
+  factory AllCountry.fromJson(Map<String, dynamic> json) => AllCountry(
+    updated: json["updated"],
+    country: json["country"],
+    countryInfo: json["countryInfo"] == null ? null : CountryInfo.fromJson(json["countryInfo"]),
+    cases: json["cases"],
+    todayCases: json["todayCases"],
+    deaths: json["deaths"],
+    todayDeaths: json["todayDeaths"],
+    recovered: json["recovered"],
+    todayRecovered: json["todayRecovered"],
+    active: json["active"],
+    critical: json["critical"],
+    casesPerOneMillion: json["casesPerOneMillion"],
+    deathsPerOneMillion: json["deathsPerOneMillion"],
+    tests: json["tests"],
+    testsPerOneMillion: json["testsPerOneMillion"],
+    population: json["population"],
+    continent: continentValues.map[json["continent"]]!,
+    oneCasePerPeople: json["oneCasePerPeople"],
+    oneDeathPerPeople: json["oneDeathPerPeople"],
+    oneTestPerPeople: json["oneTestPerPeople"],
+    activePerOneMillion: json["activePerOneMillion"]?.toDouble(),
+    recoveredPerOneMillion: json["recoveredPerOneMillion"]?.toDouble(),
+    criticalPerOneMillion: json["criticalPerOneMillion"]?.toDouble(),
   );
 
   Map<String, dynamic> toJson() => {
-    "ID": id,
-    "Country": country,
-    "CountryCode": countryCode,
-    "Slug": slug,
-    "NewConfirmed": newConfirmed,
-    "TotalConfirmed": totalConfirmed,
-    "NewDeaths": newDeaths,
-    "TotalDeaths": totalDeaths,
-    "NewRecovered": newRecovered,
-    "TotalRecovered": totalRecovered,
-    "Date": date?.toIso8601String(),
-    "Premium": premium?.toJson(),
+    "updated": updated,
+    "country": country,
+    "countryInfo": countryInfo?.toJson(),
+    "cases": cases,
+    "todayCases": todayCases,
+    "deaths": deaths,
+    "todayDeaths": todayDeaths,
+    "recovered": recovered,
+    "todayRecovered": todayRecovered,
+    "active": active,
+    "critical": critical,
+    "casesPerOneMillion": casesPerOneMillion,
+    "deathsPerOneMillion": deathsPerOneMillion,
+    "tests": tests,
+    "testsPerOneMillion": testsPerOneMillion,
+    "population": population,
+    "continent": continentValues.reverse[continent],
+    "oneCasePerPeople": oneCasePerPeople,
+    "oneDeathPerPeople": oneDeathPerPeople,
+    "oneTestPerPeople": oneTestPerPeople,
+    "activePerOneMillion": activePerOneMillion,
+    "recoveredPerOneMillion": recoveredPerOneMillion,
+    "criticalPerOneMillion": criticalPerOneMillion,
   };
 }
 
-class Premium {
-  Premium();
+enum Continent { ASIA, EUROPE, AFRICA, NORTH_AMERICA, SOUTH_AMERICA, AUSTRALIA_OCEANIA, EMPTY }
 
-  factory Premium.fromJson(Map<String, dynamic> json) => Premium(
-  );
+final continentValues = EnumValues({
+  "Africa": Continent.AFRICA,
+  "Asia": Continent.ASIA,
+  "Australia-Oceania": Continent.AUSTRALIA_OCEANIA,
+  "": Continent.EMPTY,
+  "Europe": Continent.EUROPE,
+  "North America": Continent.NORTH_AMERICA,
+  "South America": Continent.SOUTH_AMERICA
+});
 
-  Map<String, dynamic> toJson() => {
-  };
-}
-
-class Global {
-  Global({
-    this.newConfirmed,
-    this.totalConfirmed,
-    this.newDeaths,
-    this.totalDeaths,
-    this.newRecovered,
-    this.totalRecovered,
-    this.date,
+class CountryInfo {
+  CountryInfo({
+    this.id,
+    this.iso2,
+    this.iso3,
+    this.lat,
+    this.long,
+    this.flag,
   });
 
-  int? newConfirmed;
-  int? totalConfirmed;
-  int? newDeaths;
-  int? totalDeaths;
-  int? newRecovered;
-  int? totalRecovered;
-  DateTime? date;
+  int? id;
+  String? iso2;
+  String? iso3;
+  double? lat;
+  double? long;
+  String? flag;
 
-  factory Global.fromJson(Map<String, dynamic> json) => Global(
-    newConfirmed: json["NewConfirmed"],
-    totalConfirmed: json["TotalConfirmed"],
-    newDeaths: json["NewDeaths"],
-    totalDeaths: json["TotalDeaths"],
-    newRecovered: json["NewRecovered"],
-    totalRecovered: json["TotalRecovered"],
-    date: json["Date"] == null ? null : DateTime.parse(json["Date"]),
+  factory CountryInfo.fromJson(Map<String, dynamic> json) => CountryInfo(
+    id: json["_id"],
+    iso2: json["iso2"],
+    iso3: json["iso3"],
+    lat: json["lat"]?.toDouble(),
+    long: json["long"]?.toDouble(),
+    flag: json["flag"],
   );
 
   Map<String, dynamic> toJson() => {
-    "NewConfirmed": newConfirmed,
-    "TotalConfirmed": totalConfirmed,
-    "NewDeaths": newDeaths,
-    "TotalDeaths": totalDeaths,
-    "NewRecovered": newRecovered,
-    "TotalRecovered": totalRecovered,
-    "Date": date?.toIso8601String(),
+    "_id": id,
+    "iso2": iso2,
+    "iso3": iso3,
+    "lat": lat,
+    "long": long,
+    "flag": flag,
   };
+}
+
+class EnumValues<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
 }
